@@ -51,6 +51,7 @@ def main():
     jirahost = os.environ["JIRA_HOST"]
     jirauser = os.environ["JIRA_USER"]
     github_wf_name = os.environ["GITHUB_WORKFLOW_NAME"]
+    # adding suffix as some job types are key words in JQL and can't be used in query
     github_wf_name_suffix = github_wf_name + "-job_type"
 
     # auth to jira endpoint using host, user and token
