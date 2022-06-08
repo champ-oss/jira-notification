@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #	usage: python jira-notification.py
-# export JIRA_TOKEN, JIRA_HOST, JIRA_PROJECT, JIRA_USER and GIT_REPO as env variable
+# export JIRA_TOKEN, JIRA_HOST, JIRA_PROJECT, JIRA_USER, GITHUB_WORKFLOW_NAME and GIT_REPO as env variable
 #########################################################################################################
 # coding=utf-8
 from atlassian import Jira
