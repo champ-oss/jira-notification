@@ -1,7 +1,7 @@
 name: update
 description: https://github.com/champ-oss/jira-notication
 inputs:
-  JIRA_REPO:
+  GIT_REPO:
     description: 'tagging repo for failure'
     required: true
     default: 'TEST'
@@ -10,21 +10,28 @@ inputs:
     required: true
     default: 'CTEST'
   JIRA_TOKEN:
-    description: 'token used to auth with jira rest api'
+    description: 'token used to auth with jira'
+    required: true
+  JIRA_USER:
+    description: 'user used to auth with jira'
     required: true
   JIRA_HOST:
-    description: 'rest api jira host'
+    description: 'jira host'
     required: true
 
 runs:
   using: "composite"
   steps:
+    - name: install jira lib
+      shell: bash
+      run: pip3 install atlassian-python-api
     - name: run python script
       shell: bash
       env:
         JIRA_PROJECT: ${{ inputs.JIRA_PROJECT }}
-        JIRA_REPO: ${{ inputs.JIRA_REPO }}
+        JIRA_REPO: ${{ inputs.GIT_REPO }}
         JIRA_TOKEN: ${{ inputs.JIRA_TOKEN }}
+        JIRA_USER: ${{ inputs.JIRA_USER }}
         JIRA_HOST: ${{ inputs.JIRA_HOST }}
       run: |
         python ${GITHUB_ACTION_PATH}/jira-notification.py
