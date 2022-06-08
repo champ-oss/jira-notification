@@ -15,9 +15,9 @@ def jira_auth(host, user, token):
         cloud=True)
     return jira
 
-def check_existing_issue(jira, project, repo):
+def check_existing_issue(jira, project, repo, workflow_name):
     # default jira JQL query string
-    JQL = "project = " + project + " AND labels = " + repo + " AND labels = unit_test AND (statusCategory = 'To Do' OR statusCategory = 'In Progress')"
+    JQL = "project = " + project + " AND labels = " + repo + " AND labels = " + workflow_name + " AND (statusCategory = 'To Do' OR statusCategory = 'In Progress')"
 
     data = jira.jql(JQL)
     # checking json total value
@@ -25,7 +25,7 @@ def check_existing_issue(jira, project, repo):
 
     return get_total_issue_count
 
-def create_jira_issue(jira, project, repo):
+def create_jira_issue(jira, project, repo, workflow_name):
     jira.issue_create(
         fields={
             "project": {
@@ -33,7 +33,7 @@ def create_jira_issue(jira, project, repo):
             },
             "labels": [
                 "" + repo + "",
-                "unit_test"
+                "" + workflow_name + ""
             ],
             "issuetype": {
                 "name": "Problem"
@@ -50,13 +50,15 @@ def main():
     jiratoken = os.environ["JIRA_TOKEN"]
     jirahost = os.environ["JIRA_HOST"]
     jirauser = os.environ["JIRA_USER"]
+    github_wf_name = os.environ["GITHUB_WORKFLOW_NAME"]
+    github_wf_name_suffix = github_wf_name + "-job_type"
 
     # auth to jira endpoint using host, user and token
     get_jira_auth = jira_auth(jirahost, jirauser, jiratoken)
     # checking if issue exist, creating issue if total count equals zero
-    get_issue_count = check_existing_issue(get_jira_auth, jiraproject, repo)
+    get_issue_count = check_existing_issue(get_jira_auth, jiraproject, repo, github_wf_name_suffix)
     if get_issue_count == 0:
-        create_jira_issue(get_jira_auth, jiraproject, repo)
+        create_jira_issue(get_jira_auth, jiraproject, repo, github_wf_name_suffix)
     else:
         print('not creating issue, already exist........')
 
