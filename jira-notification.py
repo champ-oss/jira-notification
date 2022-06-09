@@ -9,9 +9,9 @@ import os
 def jira_auth(host, user, token):
     # jira auth requirements
     jira = Jira(
-        url="https://" + host + "",
-        username="" + user + "",
-        password="" + token + "",
+        url="https://" + host,
+        username=user,
+        password=token,
         cloud=True)
     return jira
 
