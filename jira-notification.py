@@ -32,14 +32,14 @@ def create_jira_issue(jira, project, repo, workflow_name):
                 "key": project
             },
             "labels": [
-                "" + repo + "",
-                "" + workflow_name + ""
+                repo,
+                workflow_name
             ],
             "issuetype": {
                 "name": "Problem"
             },
             "summary": "" + repo + " failure",
-            "description": "unit test module failure",
+            "description": "" + repo + " - " + workflow_name + " failure",
         }
     )
 
