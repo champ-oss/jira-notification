@@ -1,4 +1,4 @@
-me: apply
+name: jira
 
 on:
   workflow_dispatch:
