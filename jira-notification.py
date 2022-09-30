@@ -17,7 +17,7 @@ def jira_auth(host, user, token):
 
 def check_existing_issue(jira, project, repo, workflow_name):
     # default jira JQL query string
-    JQL = "project = " + project + " AND labels = " + repo + " AND labels = " + workflow_name + " AND (statusCategory = 'To Do' OR statusCategory = 'In Progress')"
+    JQL = "project = " + project + " AND labels = " + repo + " AND labels = " + workflow_name + " AND (status = 'To Do' OR status = 'In Progress')"
 
     data = jira.jql(JQL)
     # checking json total value
