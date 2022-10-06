@@ -28,7 +28,7 @@ runs:
   steps:
     - name: install jira lib
       shell: bash
-      run: pip3 install atlassian_python_api==3.27.0
+      run: cd ${{github.action_path}} && pip3 install -r requirements.txt
     - name: run python script
       shell: bash
       env:
